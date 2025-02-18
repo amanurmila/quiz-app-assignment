@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Quiz from "./components/Quiz";
+import Scoreboard from "./components/Scoreboard";
 
 function App() {
+  const [quizCompleted, setQuizCompleted] = useState(false);
+  const [score, setScore] = useState(0);
+
+  const handleQuizEnd = (finalScore) => {
+    setScore(finalScore);
+    setQuizCompleted(true);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      <h1 className="text-3xl font-bold text-blue-600 mb-6">
+        Interactive Quiz Platform
+      </h1>
+      {quizCompleted ? (
+        <Scoreboard score={score} total={10} />
+      ) : (
+        <Quiz onQuizEnd={handleQuizEnd} />
+      )}
     </div>
   );
 }
